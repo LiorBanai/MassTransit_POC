@@ -36,20 +36,13 @@ namespace MassTransit.Tests
                                 h.ConfigureBatchPublish(b => b.Enabled = true);
                             });
 
-                            cfg.ReceiveEndpoint(typeof(SystemEvent).FullName,
+                            cfg.ReceiveEndpoint(Guid.NewGuid().ToString(),
                                 c =>
                                 {
+                                    c.AutoDelete = true;
                                     c.Instance(seConsumer);
                                 });
 
-                            //x.AddConsumer<MTSystemEventConsumer>()
-                            //    .Endpoint(c =>
-                            //    {
-                                    
-                            //        c.Temporary = true;
-                            //        //c.Name = typeof(SystemEvent).FullName;
-                            //        c.InstanceId = Guid.NewGuid().ToString();
-                            //    });
                             cfg.ConfigureEndpoints(context);
 
                         });
